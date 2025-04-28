@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+bin/
+lib/
+lib64/
+include/
+share/
+pyvenv.cfg
+.env
+*.db
