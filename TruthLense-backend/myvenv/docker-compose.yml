@@ -1,0 +1,9 @@
+services:
+  fastapi-truthlense:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+
