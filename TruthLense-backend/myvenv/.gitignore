@@ -1,0 +1,38 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environment
+venv/
+.env
+.env.*
+
+# Python virtual environment folders (if manually created)
+bin/
+lib/
+lib64/
+include/
+share/
+pyvenv.cfg
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# MacOS metadata
+.DS_Store
+
+# Databases
+*.db
+
+# Model files
+*.bin
+*.ckpt
+*.h5
+
+# Logs
+*.log
