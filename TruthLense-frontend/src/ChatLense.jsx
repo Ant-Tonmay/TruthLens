@@ -58,30 +58,8 @@ const ChatLense = () => {
       </div>
       }
       {isInitilized&&
-      <div className="query">
-        {!isSendButtonClicked && <h1>What can i help you with</h1>}
-
-        <div className="chat-wrapper">
-          <div className="chat-container">
-            {messages.map((msg) => (
-              <div key={msg.id} className={`message ${msg.sender}`}>
-                {msg.text}
-              </div>
-            ))}
-            <div ref={chatEndRef} />
-          </div>
-          <div className="input-area">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Type your message..."
-            />
-            <button onClick={sendMessage}>Send</button>
-          </div>
-        </div>
-      </div>}
+        <h1> impement this</h1>
+      }
     </>
   );
 };
