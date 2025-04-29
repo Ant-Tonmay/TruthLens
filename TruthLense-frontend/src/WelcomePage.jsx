@@ -14,7 +14,7 @@ export const WelcomePage = () => {
   return (
    <>
      <h1> Welcome to TruthLense </h1>
-     <h2> See the what's truth </h2>
+     <h2> Don't believe verify instead </h2>
      
     
       <Button endDecorator={<KeyboardArrowRight />} color="neutral"onClick={handleGetStarted} >
