@@ -9,5 +9,4 @@ lib64/
 include/
 share/
 pyvenv.cfg
-.env
 *.db
