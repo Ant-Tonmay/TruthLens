@@ -1,8 +1,16 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%; /* Ensure full width */
+  max-width: none; /* Remove 1280px limit */
+  margin: 0; /* Remove centering */
+  padding: 2rem; /* Keep or adjust spacing as needed */
   text-align: center;
+}
+
+.sidebar {
+  width: 25%; /* 1/4th of screen */
+  background-color: #e5e7eb; /* Tailwind's bg-gray-200 equivalent */
+  padding: 24px;
+  box-sizing: border-box;
 }
 
 .logo {

@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import "./styles/chat-lense.css";
+import React, { useEffect, useRef, useState } from "react";
 import FullWidthTextField from "./components/FullWidthTextField";
+import QuestionAns from "./QuestionAns";
+import "./styles/chat-lense.css";
 
 const ChatLense = () => {
   const [isSendButtonClicked, setIsSendButtonClicked] = useState(false);
+  
   const [isInitilized,setIsInitilized] = useState(false);
   const [messages, setMessages] = useState([
     { id: 1, sender: "bot", text: "Hi there! How can I help you today?" },
@@ -58,7 +60,7 @@ const ChatLense = () => {
       </div>
       }
       {isInitilized&&
-        <h1> impement this</h1>
+        <QuestionAns setIsInitilized={setIsInitilized}/>
       }
     </>
   );
