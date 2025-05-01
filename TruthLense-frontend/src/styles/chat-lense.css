@@ -1,3 +1,14 @@
+
+.initilization{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2px;
+    gap:1rem;
+    align-items: center;
+}
+
 .chat-wrapper {
     display: flex;
     flex-direction: column;
@@ -74,15 +85,36 @@
     border-radius: 0.8rem;
     display: flex;
     flex-direction: row;
+    width: 1000px;
   }
-  .full-width-input>input, .send{
+  .full-width-input>textarea, .send{
     background: transparent;
     border: none;
   }
 
-  .full-width-input>input{
+  .full-width-input > textarea {
     outline: none;
     padding: 1.25rem;
-    width: calc(100% - 4rem);
+    width: calc(100% - 8rem);
     color: white;
+    resize: none; /* Disables resizing */
+    overflow: hidden; /* Hides scrollbar */
+    
+    /* Optional smooth scroll disabling (if applicable) */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  }
+
+  .full-width-input > textarea::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .welcome-page-outer{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    gap:1rem;
   }

@@ -6,16 +6,20 @@
 
 .sidebar {
   width: 25%;
-  background-color: #e5e7eb; /* Tailwind's gray-200 */
+  background-color:#101010; /* Tailwind's gray-200 */
   padding: 1.5rem;
   overflow-y: auto;
-  border-radius: 2rem;
+  gap: 1rem;
+  
 }
 
 .sidebar h2 {
   font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 1rem;
+}
+.newchat-btn{
+  margin: 5px;
 }
 
 .sidebar ul {
@@ -24,8 +28,17 @@
 }
 
 .sidebar ul li {
-  margin-bottom: 0.5rem;
-  color: #1f2937; /* Tailwind's gray-800 */
+  color: white;
+  text-align: left;
+  padding: 10px;
+
+}
+.sidebar ul li:hover {
+  background-color: rgb(95, 91, 91);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  
+  
 }
 
 .chat-area {
@@ -34,6 +47,7 @@
   flex-direction: column;
   padding: 1.5rem;
   overflow-y: auto;
+  position: relative;
 }
 
 .chat-area h1 {
@@ -48,12 +62,13 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding: 0px 50px;
 }
 
 .chat-block .user-msg {
   align-self: flex-start;
-  background-color: #bfdbfe; /* Tailwind's blue-100 */
-  color: #1e3a8a; /* Tailwind's blue-900 */
+  background-color: #36454F;; /* Tailwind's blue-100 */
+  color: white; /* Tailwind's blue-900 */
   padding: 0.75rem 1rem;
   border-radius: 1rem;
   max-width: 40rem;
@@ -61,11 +76,15 @@
 
 .chat-block .ai-msg {
   align-self: flex-end;
-  background-color: #f3f4f6; /* Tailwind's gray-100 */
-  color: #1f2937;
+  background-color: #343434; /* Tailwind's gray-100 */
+  color: white;
   padding: 0.75rem 1rem;
   border-radius: 1rem;
   max-width: 40rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  
 }
 
 .input-form {
@@ -105,4 +124,77 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 0.2rem;
+}
+.no-message-div{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-100%);
+}
+
+.loading08 span {
+  position: relative;
+  color: rgba(0, 0, 0, 0.2);
+  animation: loading08-parent 5s infinite;
+}
+
+.loading08 span::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: attr(data-text);
+  color: #fff;
+  opacity: 0;
+  animation: loading08-child 5s infinite;
+}
+
+/* Add staggered animation delays */
+.loading08 span:nth-child(1)::after { animation-delay: 0.2s; }
+.loading08 span:nth-child(2)::after { animation-delay: 0.4s; }
+.loading08 span:nth-child(3)::after { animation-delay: 0.6s; }
+.loading08 span:nth-child(4)::after { animation-delay: 0.8s; }
+.loading08 span:nth-child(5)::after { animation-delay: 1s; }
+.loading08 span:nth-child(6)::after { animation-delay: 1.2s; }
+.loading08 span:nth-child(7)::after { animation-delay: 1.4s; }
+.loading08 span:nth-child(8)::after { animation-delay: 1.6s; }
+
+@keyframes loading08-parent {
+  0%, 35%, 100% {
+    color: rgba(0, 0, 0, 0.2);
+  }
+  60%, 80% {
+    color: #fff;
+  }
+}
+
+@keyframes loading08-child {
+  0% {
+    opacity: 1;
+  }
+  25%, 100% {
+    opacity: 0;
+  }
+}
+
+.rag-context pre, .graph-rag-context pre {
+  margin-left: 1rem;
+}
+
+.graph-rag-context pre {
+  font-family: monospace;
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
+}
+
+.rag-context pre{
+  font-family: monospace;
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-top: 10px;
+  
 }
