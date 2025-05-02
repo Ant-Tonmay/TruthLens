@@ -2,66 +2,102 @@ import React, { useEffect, useRef, useState } from "react";
 import FullWidthTextField from "./components/FullWidthTextField";
 import QuestionAns from "./QuestionAns";
 import "./styles/chat-lense.css";
+import SideBar from "./components/SideBar";
 
 const ChatLense = () => {
-  const [isSendButtonClicked, setIsSendButtonClicked] = useState(false);
-  
-  const [isInitilized,setIsInitilized] = useState(false);
+  const [topicName, setTopicName] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [answerData, setAnswerData] = useState([]);
+
+  const [isInitilized, setIsInitilized] = useState(false);
   const [messages, setMessages] = useState([
     { id: 1, sender: "bot", text: "Hi there! How can I help you today?" },
   ]);
+  const inputRef = useRef();
 
-  const handleSendBtnInitilization = ()=>{
-    setIsInitilized(true);
-  }
+  const handleSendBtnInitilization = async (e) => {
+    const queryName = inputRef.current.value;
+    setIsLoading(true);
+    e.preventDefault();
+    setTopicName(queryName);
+    try {
+      const response = await fetch("http://0.0.0.0:8000/initilize", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: queryName }),
+      });
+      if (response.status == 200) {
+        localStorage.setItem(queryName,JSON.stringify([]));
+        setIsLoading(false);
+        setIsInitilized(true);
+        
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const [input, setInput] = useState("");
   const chatEndRef = useRef(null);
 
-  const sendMessage = () => {
-    if (input.trim() === "") return;
-    setIsSendButtonClicked(true);
-
-    const userMessage = { id: Date.now(), sender: "user", text: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-
-    // Simulate bot response
-    setTimeout(() => {
-      const botMessage = {
-        id: Date.now() + 1,
-        sender: "bot",
-        text: "This is a simulated response.",
-      };
-      setMessages((prev) => [...prev, botMessage]);
-    }, 800);
-  };
-
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+  const handleTopicClicked = (e) => {
+    setIsInitilized(true);
+    setIsLoading(false);
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") sendMessage();
+    const key = e.target.id;
+    setTopicName(key);
+    const previousData = localStorage.getItem(key);
+
+    setAnswerData(JSON.parse(previousData) || []);
   };
 
   return (
     <>
+      {isLoading && (
+        <div className="animate-cont">
+          <div class="wrapper">
+          <div class="squre-frame"></div>
+          <div class="squre-frame"></div>
+          <div class="squre-frame"></div>
+          <div class="squre-frame"></div>
+          <div class="squre-frame"></div>
+          <div class="squre-frame"></div>
+          <div class="squre-frame"></div>
+        </div>
+        <h3>Initilization RAG and GraphRAG Pipeline</h3>
+        </div>
+      )}
 
-      {
-        !isInitilized &&
-        <div className="initilization">
-         <h1>What do you want to check about</h1>
-          <FullWidthTextField 
-          placeholder="Eg : I want to check some facts about Virat Kohli"
-          handleSendbtn={handleSendBtnInitilization}
+      {!isInitilized && !isLoading && (
+        <div className="init-outer">
+          <SideBar
+            handleTopicClicked={handleTopicClicked}
+            showNewChatBtn={false}
           />
-
-      </div>
-      }
-      {isInitilized&&
-        <QuestionAns setIsInitilized={setIsInitilized}/>
-      }
+          <div className="initilization">
+            <h1>What do you want to check about</h1>
+            <FullWidthTextField
+              placeholder="Eg : I want to check some facts about Virat Kohli"
+              inputRef={inputRef}
+              handleSendbtn={handleSendBtnInitilization}
+            />
+          </div>
+        </div>
+      )}
+      {isInitilized && (
+        <QuestionAns
+          setIsInitilized={setIsInitilized}
+          topicName={topicName}
+          setTopicName={setTopicName}
+          answerData={answerData}
+          setAnswerData={setAnswerData}
+        />
+      )}
     </>
   );
 };

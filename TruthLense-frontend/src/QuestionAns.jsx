@@ -1,12 +1,34 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import CreateButton from "./components/CreateButton";
 import "./styles/Question_Ans.css";
 import FullWidthTextField from "./components/FullWidthTextField";
+import  SideBar  from "./components/SideBar";
 
-const QuestionAns = ({ setIsInitilized }) => {
+const QuestionAns = ({ setIsInitilized, topicName,setTopicName ,
+  answerData, setAnswerData
+}) => {
   const inputRef = useRef();
-  const [answerData, setAnswerData] = useState([]);
+  
+  
   const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const saved = localStorage.getItem(topicName);
+    if (saved) {
+      setAnswerData(JSON.parse(saved));
+    }
+  }, [topicName]);
+
+  useEffect(() => {
+    if (answerData.length === 0) {
+      return;
+    }
+    localStorage.setItem(topicName, JSON.stringify(answerData));
+
+  }, [answerData]);
+
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,7 +103,6 @@ const QuestionAns = ({ setIsInitilized }) => {
           return updated;
         });
       }, 80); // speed: lower = faster
-
     } catch (error) {
       setAnswerData((prev) => {
         const updated = [...prev];
@@ -101,17 +122,18 @@ const QuestionAns = ({ setIsInitilized }) => {
     setIsInitilized(false);
   };
 
+  const handleTopicClicked = (e)=>{
+    const key = e.target.id;
+    setTopicName(key)
+    const previousData = localStorage.getItem(key);
+    
+    setAnswerData(JSON.parse(previousData)||[])
+  }
+
   return (
     <div className="container">
       {/* Sidebar */}
-      <div className="sidebar">
-        <CreateButton handleClick={handleNewChat} />
-        <ul>
-          <li>Chat 1</li>
-          <li>Chat 2</li>
-          <li>Chat 3</li>
-        </ul>
-      </div>
+      <SideBar topicNames={topicName} handleNewChat={handleNewChat} handleTopicClicked={handleTopicClicked}/>
 
       {/* Chat area */}
       <div className="chat-area">
@@ -198,11 +220,15 @@ const QuestionAns = ({ setIsInitilized }) => {
         </div>
 
         {/* Input */}
+        <div className="text-field-container">
+
         <FullWidthTextField
           placeholder="Enter your Query"
           inputRef={inputRef}
           handleSendbtn={handleSubmit}
         />
+        </div>
+        
       </div>
     </div>
   );
