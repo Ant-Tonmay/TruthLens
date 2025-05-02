@@ -63,7 +63,7 @@ def initilize(request: QueryRequest):
         print(wikipedia_title)
         prepare_graph_rag(wikidata_id)
         prepare_rag(named_enitity)  
-        return "Initilization Done"
+        return named_enitity
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
     
