@@ -16,9 +16,9 @@ const SideBar = ({
       {showNewChatBtn ? (
         <CreateButton handleClick={handleNewChat} />
       ) : (
-        <h3>{heading}</h3>
+       <></>
       )}
-
+       <h3>{heading}</h3>
       <ul>
         {topicNames.map((val,index) => ( 
           <li className={topicName===val?"active":""}

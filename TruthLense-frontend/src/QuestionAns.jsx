@@ -148,6 +148,7 @@ const QuestionAns = ({ setIsInitilized, topicName,setTopicName ,
       handleNewChat={handleNewChat} 
       handleTopicClicked={handleTopicClicked}
       heading="You History"
+      topicName={topicName}
       
       />
 

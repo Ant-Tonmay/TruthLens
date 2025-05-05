@@ -108,6 +108,7 @@ const ChatLense = () => {
             showNewChatBtn={false}
             heading="Our Collection"
             topicNames={topicCollection}
+            topicName={topicName}
           />
           <div className="initilization">
             <h1>What do you want to check about</h1>
