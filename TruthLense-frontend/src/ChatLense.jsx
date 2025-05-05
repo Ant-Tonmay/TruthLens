@@ -13,15 +13,38 @@ const ChatLense = () => {
   const [messages, setMessages] = useState([
     { id: 1, sender: "bot", text: "Hi there! How can I help you today?" },
   ]);
+  const [topicCollection , setTopicCollection] = useState([])
   const inputRef = useRef();
+
+  const fecthCollection = async()=>{
+
+    try {
+      const response = await fetch("http://0.0.0.0:8001/entity_collection");
+      if (response.status == 200) {
+        // console.log(response.body)
+        // console.log(typeof response.body)
+        // setTopicCollection(response.body)
+        const data = await response.json()
+        const data_refactored =data.map((e)=> e.entity_name)
+        console.log(data_refactored)
+        setTopicCollection(data_refactored)
+        
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect( ()=>{
+    fecthCollection()
+  },[])
 
   const handleSendBtnInitilization = async (e) => {
     const queryName = inputRef.current.value;
     setIsLoading(true);
     e.preventDefault();
-    setTopicName(queryName);
     try {
-      const response = await fetch("http://0.0.0.0:8000/initilize", {
+      const response = await fetch("http://0.0.0.0:8001/initilize", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,9 +52,11 @@ const ChatLense = () => {
         body: JSON.stringify({ query: queryName }),
       });
       if (response.status == 200) {
-        localStorage.setItem(queryName,JSON.stringify([]));
+        const namedEnitity = await response.json();
+        setAnswerData([]);
         setIsLoading(false);
         setIsInitilized(true);
+        setTopicName(namedEnitity)
         
       }
     } catch (error) {
@@ -51,9 +76,12 @@ const ChatLense = () => {
 
     const key = e.target.id;
     setTopicName(key);
+   
     const previousData = localStorage.getItem(key);
 
     setAnswerData(JSON.parse(previousData) || []);
+    
+   
   };
 
   return (
@@ -78,6 +106,8 @@ const ChatLense = () => {
           <SideBar
             handleTopicClicked={handleTopicClicked}
             showNewChatBtn={false}
+            heading="Our Collection"
+            topicNames={topicCollection}
           />
           <div className="initilization">
             <h1>What do you want to check about</h1>
@@ -89,6 +119,7 @@ const ChatLense = () => {
           </div>
         </div>
       )}
+      {/* {Compononent} */}
       {isInitilized && (
         <QuestionAns
           setIsInitilized={setIsInitilized}

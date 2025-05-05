@@ -27,7 +27,18 @@ const QuestionAns = ({ setIsInitilized, topicName,setTopicName ,
   }, [answerData]);
 
 
-
+ const [topicNames, setTopicNames] = useState([]);
+  useEffect(() => {
+    const temp = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i); // Get the key at index i
+      const value = localStorage.getItem(key); // Get the value of that key
+      temp.push(key);
+    }
+    if(topicName)
+        setTopicNames([topicName, ...temp]);
+    else setTopicNames(temp)
+  }, [topicName]);
 
 
   const handleSubmit = async (e) => {
@@ -49,7 +60,7 @@ const QuestionAns = ({ setIsInitilized, topicName,setTopicName ,
     inputRef.current.value = "";
 
     try {
-      const response = await fetch("http://0.0.0.0:8000/query", {
+      const response = await fetch("http://0.0.0.0:8001/query", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -133,7 +144,12 @@ const QuestionAns = ({ setIsInitilized, topicName,setTopicName ,
   return (
     <div className="container">
       {/* Sidebar */}
-      <SideBar topicNames={topicName} handleNewChat={handleNewChat} handleTopicClicked={handleTopicClicked}/>
+      <SideBar topicNames={topicNames} 
+      handleNewChat={handleNewChat} 
+      handleTopicClicked={handleTopicClicked}
+      heading="You History"
+      
+      />
 
       {/* Chat area */}
       <div className="chat-area">

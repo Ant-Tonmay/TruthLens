@@ -7,26 +7,16 @@ const SideBar = ({
   handleNewChat,
   topicName,
   showNewChatBtn = true,
+  heading,
+  topicNames
 }) => {
-  const [topicNames, setTopicNames] = useState([]);
-  useEffect(() => {
-    const temp = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i); // Get the key at index i
-      const value = localStorage.getItem(key); // Get the value of that key
-      temp.push(key);
-    }
-    if(topicName)
-        setTopicNames([topicName, ...temp]);
-    else setTopicNames(temp)
-  }, [topicName]);
-
+ 
   return (
     <div className="sidebar">
       {showNewChatBtn ? (
         <CreateButton handleClick={handleNewChat} />
       ) : (
-        <h3>Your History</h3>
+        <h3>{heading}</h3>
       )}
 
       <ul>
