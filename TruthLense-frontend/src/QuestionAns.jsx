@@ -35,7 +35,7 @@ const QuestionAns = ({ setIsInitilized, topicName,setTopicName ,
       const value = localStorage.getItem(key); // Get the value of that key
       temp.push(key);
     }
-    if(topicName)
+    if(!localStorage.getItem(topicName))
         setTopicNames([topicName, ...temp]);
     else setTopicNames(temp)
   }, [topicName]);
