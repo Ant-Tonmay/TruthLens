@@ -16,7 +16,7 @@
 .sidebar h2 {
   font-size: 1.25rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
 }
 .newchat-btn{
   margin: 5px;
@@ -206,4 +206,5 @@
 }
 .active{
   background-color: #343434;
+  border-radius: 0.5rem;
 }

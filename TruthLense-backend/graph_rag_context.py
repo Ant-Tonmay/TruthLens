@@ -92,7 +92,7 @@ def search_similar_nodes_and_relationships(neo4j_results, query_embedding, thres
 
         # if max_score > threshold:
         results.append((source_name, relation, target_name, max_score))
-
+  
     # Sort by similarity score in descending order
     results.sort(key=lambda x: x[3], reverse=True)
 
