@@ -60,7 +60,7 @@ const QuestionAns = ({ setIsInitilized, topicName,setTopicName ,
     inputRef.current.value = "";
 
     try {
-      const response = await fetch("http://0.0.0.0:8001/query", {
+      const response = await fetch("http://0.0.0.0:8000/query", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import FullWidthTextField from "./components/FullWidthTextField";
 import QuestionAns from "./QuestionAns";
 import "./styles/chat-lense.css";
 import SideBar from "./components/SideBar";
+import AnimatedLoadingText from "./components/AnimatedLoadingText";
 
 const ChatLense = () => {
   const [topicName, setTopicName] = useState(null);
@@ -13,38 +14,36 @@ const ChatLense = () => {
   const [messages, setMessages] = useState([
     { id: 1, sender: "bot", text: "Hi there! How can I help you today?" },
   ]);
-  const [topicCollection , setTopicCollection] = useState([])
+  const [topicCollection, setTopicCollection] = useState([]);
   const inputRef = useRef();
 
-  const fecthCollection = async()=>{
-
+  const fecthCollection = async () => {
     try {
-      const response = await fetch("http://0.0.0.0:8001/entity_collection");
+      const response = await fetch("http://0.0.0.0:8000/entity_collection");
       if (response.status == 200) {
         // console.log(response.body)
         // console.log(typeof response.body)
         // setTopicCollection(response.body)
-        const data = await response.json()
-        const data_refactored =data.map((e)=> e.entity_name)
-        console.log(data_refactored)
-        setTopicCollection(data_refactored)
-        
+        const data = await response.json();
+        const data_refactored = data.map((e) => e.entity_name);
+        console.log(data_refactored);
+        setTopicCollection(data_refactored);
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  useEffect( ()=>{
-    fecthCollection()
-  },[])
+  useEffect(() => {
+    fecthCollection();
+  }, []);
 
   const handleSendBtnInitilization = async (e) => {
     const queryName = inputRef.current.value;
     setIsLoading(true);
     e.preventDefault();
     try {
-      const response = await fetch("http://0.0.0.0:8001/initilize", {
+      const response = await fetch("http://0.0.0.0:8000/initilize", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,8 +55,7 @@ const ChatLense = () => {
         setAnswerData([]);
         setIsLoading(false);
         setIsInitilized(true);
-        setTopicName(namedEnitity)
-        
+        setTopicName(namedEnitity);
       }
     } catch (error) {
       console.log(error);
@@ -76,12 +74,10 @@ const ChatLense = () => {
 
     const key = e.target.id;
     setTopicName(key);
-   
+
     const previousData = localStorage.getItem(key);
 
     setAnswerData(JSON.parse(previousData) || []);
-    
-   
   };
 
   return (
@@ -89,15 +85,15 @@ const ChatLense = () => {
       {isLoading && (
         <div className="animate-cont">
           <div class="wrapper">
-          <div class="squre-frame"></div>
-          <div class="squre-frame"></div>
-          <div class="squre-frame"></div>
-          <div class="squre-frame"></div>
-          <div class="squre-frame"></div>
-          <div class="squre-frame"></div>
-          <div class="squre-frame"></div>
-        </div>
-        <h3>Initilization RAG and GraphRAG Pipeline</h3>
+            <div class="squre-frame"></div>
+            <div class="squre-frame"></div>
+            <div class="squre-frame"></div>
+            <div class="squre-frame"></div>
+            <div class="squre-frame"></div>
+            <div class="squre-frame"></div>
+            <div class="squre-frame"></div>
+          </div>
+          <AnimatedLoadingText text="Initilization RAG and GraphRAG Pipeline" />
         </div>
       )}
 

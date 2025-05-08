@@ -1,0 +1,33 @@
+
+.loading07{
+    width: 100%;
+}
+.loading07 span {
+    position: relative;
+    color: #242424;
+    display: inline-block;
+  }
+  
+  .loading07 span::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    opacity: 0;
+    transform: scale(1.5);
+    animation: loading07 3s infinite;
+    animation-delay: calc(var(--i) * 0.05s);
+  }
+  
+  @keyframes loading07 {
+    0%, 75%, 100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+    25%, 50% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
