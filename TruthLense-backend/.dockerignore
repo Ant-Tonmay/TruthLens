@@ -2,12 +2,11 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-venv/
+myvenv/
 bin/
 lib/
 lib64/
 include/
 share/
 pyvenv.cfg
-.env
 *.db

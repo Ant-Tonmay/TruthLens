@@ -2,8 +2,9 @@
   width: 100%; /* Ensure full width */
   max-width: none; /* Remove 1280px limit */
   margin: 0; /* Remove centering */
-  padding: 2rem; /* Keep or adjust spacing as needed */
   text-align: center;
+  background-color: #242424;
+
 }
 
 .sidebar {
@@ -12,7 +13,7 @@
   padding: 24px;
   box-sizing: border-box;
 }
-
+/* 
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -47,4 +48,9 @@
 
 .read-the-docs {
   color: #888;
+} */
+
+*{
+  margin: 0;
+  padding: 0;
 }

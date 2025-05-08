@@ -6,10 +6,34 @@ from llm import run_llm
 from utility import get_prompt_for_finding_named_enitity,get_prompt_for_finding_wikidata
 from wikidata import get_wikidata_info,get_wikipedia_title,get_wikidata_response
 from dotenv import load_dotenv , dotenv_values
-from models import QueryRequest,QueryResponse
+from models import QueryRequest,QueryResponse , Entity
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import os
+
+
 load_dotenv()
 
 app = FastAPI()
+
+
+
+
+uri = os.getenv("MONGODB_URI")
+
+# Create a new client and connect to the server
+client = MongoClient(uri, server_api=ServerApi('1'))
+
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+
+db = client.truth_lense
+entity_name_collection = db["entity_name"]
+rag_context_collection = db["rag_context"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -56,14 +80,21 @@ def initilize(request: QueryRequest):
         prompt_to_named_entity = get_prompt_for_finding_named_enitity(query)
         named_enitity = run_llm(prompt_to_named_entity)
         print(named_enitity)
+        named_enitity = named_enitity.strip()
         wikidata_id_meta_info = get_wikidata_response(named_enitity)
         wikidata_id = run_llm(get_prompt_for_finding_wikidata(query,wikidata_id_meta_info))
         print(wikidata_id)
         wikipedia_title = get_wikipedia_title(query)
         print(wikipedia_title)
         prepare_graph_rag(wikidata_id)
-        prepare_rag(named_enitity)  
-        return "Initilization Done"
+        prepare_rag(named_enitity)
+        #insert named_entity_into the database
+        entity_name_collection.insert_one({"entity_name": named_enitity})
+        return named_enitity
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
     
+@app.get("/entity_collection", response_model=list[Entity])
+async def get_entity_collection():
+    entities = list(entity_name_collection.find({}, {"_id": 0}))  # Exclude MongoDB _id field
+    return entities

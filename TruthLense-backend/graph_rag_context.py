@@ -7,7 +7,7 @@ from embeddings import get_embedding
 from dotenv import load_dotenv , dotenv_values
 import os
 from neo4j import GraphDatabase
-
+load_dotenv()
 NEO4J_URI=os.getenv("NEO4J_URI")
 NEO4J_USERNAME=os.getenv("NEO4J_USERNAME")
 NEO4J_PASSWORD=os.getenv("NEO4J_PASSWORD")
@@ -92,7 +92,7 @@ def search_similar_nodes_and_relationships(neo4j_results, query_embedding, thres
 
         # if max_score > threshold:
         results.append((source_name, relation, target_name, max_score))
-
+  
     # Sort by similarity score in descending order
     results.sort(key=lambda x: x[3], reverse=True)
 
@@ -100,7 +100,9 @@ def search_similar_nodes_and_relationships(neo4j_results, query_embedding, thres
 
 
 def user_query_to_context(user_query):
-  
+  print(f"NEO4J_URI : {NEO4J_URI}")
+  print(f"NEO4J_USERNAME:{NEO4J_USERNAME}")
+  print(f"NEO4J_PASSWORD:{NEO4J_USERNAME}")
   with GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD)) as driver:
       with driver.session() as session:
           neo4j_results = session.read_transaction(fetch_nodes_and_relationships)
