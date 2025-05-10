@@ -54,7 +54,7 @@ def create_graph_in_neo4j(relationship_data):
   with GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD)) as driver:
     with driver.session() as session:
         session.write_transaction(insert_data, relationship_data)
-  print("✅ Data inserted successfully!")
+  print("Data inserted successfully!")
 
 
 def fetch_nodes_and_relationships(tx):
@@ -114,7 +114,7 @@ def user_query_to_context(user_query):
   similar_nodes = search_similar_nodes_and_relationships(neo4j_results, query_embedding)
 
   # Print results
-  print("🔹 Relevant Nodes and Relationships:")
+  print(" Relevant Nodes and Relationships:")
   for source, relation, target, score in similar_nodes:
       print(f"{source} -[{relation}]-> {target}, Score: {score:.3f}")
   context = []

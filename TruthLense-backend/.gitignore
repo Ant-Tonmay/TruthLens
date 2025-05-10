@@ -40,7 +40,6 @@ pyvenv.cfg
 
 lib64
 relationships.txt
-requirements.txt
 resoponse.json
 response_relationships.json
 wikipedia_content.txt
