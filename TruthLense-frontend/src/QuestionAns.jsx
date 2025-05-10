@@ -65,7 +65,7 @@ const QuestionAns = ({ setIsInitilized, topicName,setTopicName ,
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ query: newQuestion }),
+        body: JSON.stringify({ query: newQuestion,named_entity:topicName }),
       });
 
       const data = await response.json();

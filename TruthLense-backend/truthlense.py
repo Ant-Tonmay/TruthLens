@@ -6,7 +6,7 @@ from llm import run_llm
 from utility import get_prompt_for_finding_named_enitity,get_prompt_for_finding_wikidata
 from wikidata import get_wikidata_info,get_wikipedia_title,get_wikidata_response
 from dotenv import load_dotenv , dotenv_values
-from models import QueryRequest,QueryResponse , Entity
+from models import QueryRequest,QueryResponse , Entity , QueryRequestForLLM
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
@@ -45,9 +45,11 @@ app.add_middleware(
 
 
 @app.post("/query",status_code=status.HTTP_200_OK, response_model=QueryResponse)
-async def check_fact(request: QueryRequest):
+async def check_fact(request: QueryRequestForLLM):
     try:
         query = request.query
+        named_entity = request.named_entity
+        prepare_rag(named_entity)
         rag_context = get_rag_context(query)
         claim , graph_rag_context = user_query_to_context(query)
         content_for_prompt=f"""
