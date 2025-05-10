@@ -1,0 +1,16 @@
+fastapi
+neo4j
+sentence-transformers
+ollama
+SPARQLWrapper
+google-generativeai
+pypdf
+langchain
+langchain-community
+langchain-core
+wikipedia-api
+faiss-cpu
+PyPDF2
+uvicorn
+python-dotenv==1.0.1
+pymongo[srv]==3.12
