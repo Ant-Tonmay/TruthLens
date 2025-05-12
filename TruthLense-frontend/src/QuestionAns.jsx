@@ -154,7 +154,7 @@ const QuestionAns = ({ setIsInitilized, topicName,setTopicName ,
 
       {/* Chat area */}
       <div className="chat-area">
-        <h1>Truth Lense</h1>
+        <h1>Truth Lens</h1>
         {answerData.length === 0 && (
           <div className="no-message-div">
             <h1>What's on your mind ?</h1>
