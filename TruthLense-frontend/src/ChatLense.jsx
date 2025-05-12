@@ -102,7 +102,7 @@ const ChatLense = () => {
           <SideBar
             handleTopicClicked={handleTopicClicked}
             showNewChatBtn={false}
-            heading="Our Collection"
+            heading="Frequently Asked"
             topicNames={topicCollection}
             topicName={topicName}
           />

@@ -14,7 +14,7 @@ export const WelcomePage = () => {
   }
   return (
    <div className='welcome-page-outer'>
-     <h1> Welcome to TruthLense </h1>
+     <h1> Welcome to TruthLens </h1>
      <h2> Don't believe verify instead </h2>
      
     
