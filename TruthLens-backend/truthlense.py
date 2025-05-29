@@ -54,11 +54,14 @@ async def check_fact(request: QueryRequestForLLM):
         claim , graph_rag_context = user_query_to_context(query)
         content_for_prompt=f"""
         claim:{claim}
-        Based on the following Context recieved by RAG and GraphRAG, justify whether claim is true or false:
+        Based on the following Context recieved by RAG and GraphRAG, answer the query.
+        if user wants check some facts then based on the context write or wrong . 
+        if User wants to know something answer that using Context itself.
         rag context : {rag_context}
         context from GraphRAG:{graph_rag_context}
+        just answer true or false . don't write absurd sentences
         If you don't get enough context then say , unable to answer . Write what you see , don't hesitate . 
-        Answer To the point True or False . Don't absurd sentences .
+
         """
         result = run_llm(content_for_prompt)
         print(type(rag_context))
