@@ -13,49 +13,6 @@ This project implements a fact verification system that leverages both Retrieval
 *   **Context Generation:** Combines retrieved information from the Wikipedia-based RAG (text chunks) and the Neo4j GraphRAG (relevant triples) to create a comprehensive context for the LLM.
 *   **LLM-based Justification:** Uses an LLM (such as Ollama with Llama3 or Gemini) to analyze the claim against the generated context and produce a reasoned justification for whether the claim is true or false.
 
-## Setup
-
-To set up and run this project, you will need to install several libraries and configure access to external services.
-
-### Prerequisites
-
-*   Python 3.x
-*   Access to a Neo4j Aura instance or a local Neo4j database.
-*   An API key for Google Generative AI (for Gemini model).
-*   Ollama installed and running locally with the `llama3` model pulled.
-
-### Installation
-
-Install the required Python libraries using pip:
-
-```bash
-!pip install neo4j sentence-transformers colab-xterm ollama SPARQLWrapper google-generativeai pypdf langchain langchain-community langchain-core wikipedia-api faiss-cpu PyPDF2
-```
-
-*Note: Some libraries like `colab-xterm` might be specific to a Colab environment. The sources also show dependency resolution and successful installation of various packages including `neo4j`, `sentence-transformers`, `ollama`, `SPARQLWrapper`, `google-generativeai`, `pypdf`, `langchain`, `langchain-community`, `langchain-core`, `wikipedia-api`, `faiss-cpu`, and `PyPDF2`. There is a deprecation warning noted for `HuggingFaceEmbeddings` in LangChain 0.2.2, suggesting an alternative package.*
-
-### Configuration
-
-1.  **Neo4j:** Configure your Neo4j connection details:
-    ```python
-    NEO4J_URI="your_neo4j_uri"
-    NEO4J_USERNAME="your_username"
-    NEO4J_PASSWORD="your_password"
-    # AURA_INSTANCEID and AURA_INSTANCENAME are also mentioned but not explicitly used in the provided code snippets for connection.
-    ```
-2.  **Google Generative AI:** Set up your API key for accessing Google's models like Gemini:
-    ```python
-    client = genai.Client(api_key="your_google_api_key")
-    ```
-3.  **Ollama:** Ensure Ollama is running and the `llama3` model is available. Instructions for setting up Ollama and pulling the model are provided, using `colab-xterm` in the source:
-    ```bash
-    # Inside colab-xterm terminal
-    curl -fsSL https://ollama.com/install.sh | sh
-    ollama serve & ollama pull llama3
-    ```
-    The system then uses the `ollama.chat` function with the `llama3` model.
-4.  **HuggingFace Embeddings:** The system uses the `sentence-transformers/all-MiniLM-L6-v2` model for embeddings. This model is automatically downloaded by the `SentenceTransformer` library upon first use.
-
 ## Workflow and Usage
 
 The system follows these steps to verify a claim:
@@ -102,8 +59,76 @@ Based on the conversation history, here is an example workflow:
     3. GraphRAG provides information about Lionel Messi's family relationships, including the names of his children (Thiago Messi) and father (Jorge Messi). However, there is no mention of Tonmay being his son.
     Given that neither RAG nor GraphRAG contains any information linking Tonmay to Lionel Messi as a parent-child relationship, we can confidently conclude that the claim is FALSE.
     ```
+### Architecture
+![Alt text](https://github.com/Ant-Tonmay/TruthLens/blob/main/architecture.png)
 
-The system provides a loop allowing the user to enter multiple claims until they choose to quit.
+## Setup
 
+To set up and run this project, you will need to install several libraries and configure access to external services.
+
+### Prerequisites
+
+*   Python 3.x
+*   Access to a Neo4j Aura instance or a local Neo4j database.
+*   An API key for Google Generative AI (for Gemini model).
+*   Ollama installed and running locally with the `llama3` model pulled.
+
+### Installation
+
+Install the required Python libraries using pip:
+
+```bash
+!pip install neo4j sentence-transformers colab-xterm ollama SPARQLWrapper google-generativeai pypdf langchain langchain-community langchain-core wikipedia-api faiss-cpu PyPDF2
 ```
+
+*Note: Some libraries like `colab-xterm` might be specific to a Colab environment. The sources also show dependency resolution and successful installation of various packages including `neo4j`, `sentence-transformers`, `ollama`, `SPARQLWrapper`, `google-generativeai`, `pypdf`, `langchain`, `langchain-community`, `langchain-core`, `wikipedia-api`, `faiss-cpu`, and `PyPDF2`. There is a deprecation warning noted for `HuggingFaceEmbeddings` in LangChain 0.2.2, suggesting an alternative package.*
+
+### Configuration
+
+1.  **Neo4j:** Configure your Neo4j connection details:
+    ```python
+    NEO4J_URI="your_neo4j_uri"
+    NEO4J_USERNAME="your_username"
+    NEO4J_PASSWORD="your_password"
+    # AURA_INSTANCEID and AURA_INSTANCENAME are also mentioned but not explicitly used in the provided code snippets for connection.
+    ```
+2.  **Google Generative AI:** Set up your API key for accessing Google's models like Gemini:
+    ```python
+    client = genai.Client(api_key="your_google_api_key")
+    ```
+3.  **Ollama:** Ensure Ollama is running and the `llama3` model is available. Instructions for setting up Ollama and pulling the model are provided, using `colab-xterm` in the source:
+    ```bash
+    # Inside colab-xterm terminal
+    curl -fsSL https://ollama.com/install.sh | sh
+    ollama serve & ollama pull llama3
+    ```
+    The system then uses the `ollama.chat` function with the `llama3` model.
+4.  **HuggingFace Embeddings:** The system uses the `sentence-transformers/all-MiniLM-L6-v2` model for embeddings. This model is automatically downloaded by the `SentenceTransformer` library upon first use.
+5.  
+### Run Application
+Install Docker : 
+    https://docs.docker.com/engine/install/
+    
+1.  
+    ```bash
+    $ git clone https://github.com/Ant-Tonmay/TruthLens.git
+    ```
+2. 
+    ```bash
+    # Start the Backend
+    $ cd TruthLens-backend
+    $ docker compose build
+    $ docker compose up
+    ```
+ 2. 
+    ```bash
+    # Start the Frontend
+    $ cd TruthLens-frontend
+    $ npm i
+    $ npm run dev
+    ```
+    
+    
+
+
 
